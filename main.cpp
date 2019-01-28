@@ -25,8 +25,6 @@ int main(int argc,char *argv[]) {
     return -1;
   }
 
-  cout << str << '\n';
-
   Dicts dicts;
   while (getline(ifs, str)) {
     dicts.push_back(analyze_file(str));
@@ -49,7 +47,6 @@ int main(int argc,char *argv[]) {
   cout << "おつおつ!\n";
 }
 
-// ここは適当にコピペしました
 vector<std::string> split(const std::string &str, char sep) {
     std::vector<std::string> v;
     auto first = str.begin();
