@@ -13,25 +13,21 @@ typedef vector<Dict> Dicts;
 vector<std::string> split(const std::string &str, char sep);
 map<string, string> analyze_file(string str);
 
-int main(int argc,char *argv[]) {
-  string filename = argv[1];
-  cout << filename;
+class Dictionary {
+public:
+  Dict dict;
 
-  // input file
-  std::ifstream ifs(filename);
-  std::string str;
-  if (ifs.fail()) {
-    std::cerr << "Failed: load file" << std::endl;
-    return -1;
+  Dictionary(string str) {
+    vector<string> v = split(str, ':');
+
+    En en = v[0];
+    Ja ja = v[1];
+
+    dict[en] = ja;
   }
 
-  Dicts dicts;
-  while (getline(ifs, str)) {
-    dicts.push_back(analyze_file(str));
-  }
-
-  for(auto dict = dicts.rbegin(); dict != dicts.rend(); ++dict) {
-    for(auto itr = dict->begin(); itr != dict->end(); ++itr) {
+  void answer() {
+    for(auto itr = dict.begin(); itr != dict.end(); ++itr) {
       cout << itr->second<< "の英語は？";
 
       string answer;
@@ -42,6 +38,26 @@ int main(int argc,char *argv[]) {
       else
         cout << "不正解\n";
     }
+  }
+};
+
+int main(int argc,char *argv[]) {
+  string filename = argv[1];
+
+  std::ifstream ifs(filename);
+  std::string str;
+  if (ifs.fail()) {
+    std::cerr << "Failed: load file" << std::endl;
+    return -1;
+  }
+
+  vector<Dictionary> dicts;
+  while (getline(ifs, str)) {
+    dicts.push_back(Dictionary(str));
+  }
+
+  for(auto dict = dicts.rbegin(); dict != dicts.rend(); ++dict) {
+    dict->answer();
   }
 
   cout << "おつおつ!\n";
@@ -60,17 +76,4 @@ vector<std::string> split(const std::string &str, char sep) {
         first = last;
     }
     return v;
-}
-
-map<string, string> analyze_file(string str) {
-  vector<string> v = split(str, ':');
-
-  En en = v[0];
-  Ja ja = v[1];
-
-  Dict dict;
-
-  dict[en] = ja;
-
-  return dict;
 }
