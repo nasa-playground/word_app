@@ -13,10 +13,13 @@ typedef vector<Dict> Dicts;
 vector<std::string> split(const std::string &str, char sep);
 map<string, string> analyze_file(string str);
 
+// 無理やり導入したクラス
+// mapをメンバ変数として持つだけ
 class Dictionary {
 public:
   Dict dict;
 
+  // StringからDictを作る
   Dictionary(string str) {
     vector<string> v = split(str, ':');
 
@@ -26,6 +29,7 @@ public:
     dict[en] = ja;
   }
 
+  // 正解かどうかチェックする
   void answer() {
     for(auto itr = dict.begin(); itr != dict.end(); ++itr) {
       cout << itr->second<< "の英語は？";
@@ -63,6 +67,7 @@ int main(int argc,char *argv[]) {
   cout << "おつおつ!\n";
 }
 
+// stringにsplitがないらしいので作成
 vector<std::string> split(const std::string &str, char sep) {
     std::vector<std::string> v;
     auto first = str.begin();
